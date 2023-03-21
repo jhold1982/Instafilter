@@ -9,6 +9,16 @@ import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+struct CustomButton: ButtonStyle {
+	func makeBody(configuration: Configuration) -> some View {
+		configuration.label
+			.padding()
+			.background(.blue)
+			.foregroundColor(.white)
+			.clipShape(Capsule())
+	}
+}
+
 struct ContentView: View {
     @State private var image: Image?
     @State private var filterIntensity = 0.5
@@ -62,12 +72,17 @@ struct ContentView: View {
                     .padding(.vertical)
                 }
                 HStack {
-                    Button("Change Filter") {
+                    Button("Filter") {
                         showingFilterSheet = true
                     }
-                    Spacer()
+					.buttonStyle(CustomButton())
+					Spacer()
+					Button("Cancel", role: .cancel) { }
+						.buttonStyle(CustomButton())
+					Spacer()
                     Button("Save", action: saveImage)
                         .disabled(inputImage == nil)
+						.buttonStyle(CustomButton())
                 }
 				.padding()
             }
