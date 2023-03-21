@@ -5,11 +5,26 @@
 //  Created by Justin Hold on 3/21/23.
 //
 
+// MARK: Responding to state changes using onChange()
+
 import SwiftUI
 
 struct ExampleView2: View {
+	@State private var blurAmount: CGFloat = 0.0 {
+		didSet {
+			print("New value is \(blurAmount)")
+		}
+	}
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		VStack {
+			Text("Sup?!")
+				.blur(radius: blurAmount)
+			Slider(value: $blurAmount, in: 0...20)
+				.onChange(of: blurAmount) { newValue in
+					print("New value is \(newValue)")
+				}
+				.padding()
+		}
     }
 }
 
